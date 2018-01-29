@@ -1,7 +1,7 @@
 # als5ev.github.io
 New personal website 
 
-Feel Free to [check it out](https://als5ev.github.io)!
+Feel free to [check it out](https://als5ev.github.io)!
 
 TODO:
 
