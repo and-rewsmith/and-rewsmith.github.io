@@ -1,3 +1,7 @@
+body {
+	overflow-x:hidden;
+}
+
 #entry {
 	background-image: url("img/skyline.jpg");
 	height: 100vh;
@@ -18,7 +22,7 @@
 }
 
 #name {
-	font-family: "Open Sans", sans-serif;
+	font-family: "Dancing Script", cursive;
 	text-align: center;
 	font-weight: 700;
 	font-size: 38pt;
@@ -28,7 +32,7 @@
 
 #name-desc {
 	font-weight: 400;
-    font-family: "Merriweather", serif;
+	font-family: 'Bungee Inline', cursive;
     letter-spacing: 0.01rem;
     font-size: 1.8rem;
     line-height: 1.5em;
@@ -52,4 +56,130 @@
 	margin: 0 auto;
 }
 
+#about-me {
+	background-image: url("img/skyline_flipped.jpg");
+	height: 100vh;
+	background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: cover;
+    width: 100%;
+}
 
+#am-header {
+	text-align: center;
+	font-family: 'Monoton', cursive;
+	padding-top: 10vh;
+	font-size: 44pt;
+}
+
+#am-content {
+	margin-left: 12%;
+	margin-right: 12%;
+	font-family: 'Cabin Sketch', cursive;
+	padding-top: 6vh;
+
+	font-size: 25pt;
+}
+
+#transition {
+	height: 30vh;
+	width: 100%;
+	background: linear-gradient(white, #b3bdce);
+}
+
+#skills {
+	background-image: url("img/off_white.jpg");
+	height: 100vh;
+	background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: cover;
+    width: 100%;
+}
+
+#skills-header {
+	text-align: center;
+	padding-top: 10vh;
+	font-size: 44pt;
+	font-family: 'Rubik Mono One', sans-serif;
+}
+
+#skills-row {
+	margin-top: 8vh;
+	margin-left: 6%;
+	margin-right: 6%;
+	text-align: center;
+}
+
+.skills-row-header {
+	font-family: MoonBold,'Open Sans',sans-serif!important;
+	font-size: 18pt;
+	margin-top: 1vh;
+}
+
+ul {
+    width: 70%;
+    margin: auto;
+    text-align: left;
+}
+
+li {
+    font-size: 20pt;
+}
+
+.skill-item {
+    font-size: 18pt;
+    font-family: 'Fredericka the Great', cursive;
+}
+
+#resume-holder {
+	background-image: url("img/off_white_flipped.jpg");
+	height: 175vh;
+	background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: cover;
+    width: 100%;
+}
+
+#resume-holder-header {
+	text-align: center;
+	padding-top: 12vh;
+	font-family: 'Orbitron', sans-serif;
+	font-size: 40pt;
+	margin-bottom: 5vh;
+
+}
+
+#resume-holder-container {
+	padding-right: 25%;
+	padding-left: 25%;
+}
+
+#resume {
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  transform: scale(0.85,0.85);
+  height: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#resume:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: scale(1,1);
+  height: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+img {
+    vertical-align: middle;
+}
