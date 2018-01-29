@@ -1,0 +1,55 @@
+#entry {
+	background-image: url("img/skyline.jpg");
+	height: 100vh;
+	background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: cover;
+    width: 100%;
+}
+
+
+#entry-name {
+	height: 28vh;
+	background-color: rgb(245, 248, 250);
+	display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#name {
+	font-family: "Open Sans", sans-serif;
+	text-align: center;
+	font-weight: 700;
+	font-size: 38pt;
+    text-rendering: geometricPrecision;
+    vertical-align: middle;
+}
+
+#name-desc {
+	font-weight: 400;
+    font-family: "Merriweather", serif;
+    letter-spacing: 0.01rem;
+    font-size: 1.8rem;
+    line-height: 1.5em;
+    color: rgba(0,0,0,0.5);
+}
+
+#entry-carousel {
+	height: 72vh;
+}
+
+#carousel-container {
+}
+
+.carousel-item {
+	height: 58vh;
+}
+
+.carousel {
+	padding-top: 7vh;
+	width: 58vh;
+	margin: 0 auto;
+}
+
+
