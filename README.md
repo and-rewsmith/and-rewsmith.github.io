@@ -8,3 +8,5 @@ TODO:
 - add pop out menu bar
 
 - add google analytics
+
+- make mobile friendly
