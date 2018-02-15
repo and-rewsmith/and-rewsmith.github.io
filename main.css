@@ -210,7 +210,7 @@ img {
 
 
 
-@media handheld, screen and (max-width: 680px){
+@media handheld, screen and (max-width: 560px){
 	body {
 	overflow-x:hidden;
 	}
@@ -410,6 +410,23 @@ img {
 
 
 
+@media handheld, screen and (orientation: landscape) and (max-device-width: 667px)  {
 
+	#skills {
+		display: none;
+	}
 
+	#resume-holder {
+		height: 200vh;
+	}
 
+	#contact-header {
+		font-size: 9vh;
+	}
+
+	#transition {
+		display: none;
+	}
+
+	
+}
