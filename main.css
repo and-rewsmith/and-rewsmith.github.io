@@ -244,6 +244,10 @@ img {
 		font-size: 7vh;
 	}
 
+	#skills {
+		display: none;
+	}
+
 	.skills-row-header {
 		font-size: 2vh;
 	}
