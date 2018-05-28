@@ -58,7 +58,7 @@ body {
 
 #about-me {
 	background-image: url("img/skyline_flipped.jpg");
-	height: 100vh;
+	height: 85vh;
 	background-size: auto 100%;
     background-repeat: no-repeat;
     background-position: left top;
@@ -68,70 +68,26 @@ body {
 
 #am-header {
 	text-align: center;
-	font-family: 'Monoton', cursive;
-	padding-top: 10vh;
+	font-family: 'Bungee Inline', cursive;
+	padding-top: 12.5vh;
 	font-size: 8.5vh;
+	color: #686868;
 }
 
 #am-content {
 	margin-left: 12%;
 	margin-right: 12%;
-	font-family: 'Cabin Sketch', cursive;
+	font-family: "YuMincho", monospace;
+	color: #4c4c4c;
 	padding-top: 6vh;
-
-	font-size: 5vh;
+	text-align: center;
+	font-size: 3vh;
 }
 
 #transition {
-	height: 30vh;
+	height: 10vh;
 	width: 100%;
-	background: linear-gradient(white, #b3bdce);
-}
-
-#skills {
-	background-image: url("img/off_white.jpg");
-	height: 100vh;
-	background-size: auto 100%;
-    background-repeat: no-repeat;
-    background-position: left top;
-    background-size: cover;
-    width: 100%;
-}
-
-#skills-header {
-	text-align: center;
-	padding-top: 10vh;
-	font-size: 9.25vh;
-	font-family: 'Rubik Mono One', sans-serif;
-}
-
-#skills-row {
-	margin-top: 8vh;
-	margin-left: 6%;
-	margin-right: 6%;
-	text-align: center;
-}
-
-.skills-row-header {
-	font-family: MoonBold,'Open Sans',sans-serif!important;
-	font-size: 3.4vh;
-	margin-top: 1vh;
-	margin-bottom: 2vh;
-}
-
-ul {
-    width: 70%;
-    margin: auto;
-    text-align: left;
-}
-
-li {
-	margin: 1vh 0;
-}
-
-.skill-item {
-    font-size: 3.5vh;
-    font-family: 'Fredericka the Great', cursive;
+	background: linear-gradient(white, #f7f7f7);
 }
 
 #resume-holder {
@@ -146,16 +102,17 @@ li {
 
 #resume-holder-header {
 	text-align: center;
-	padding-top: 12vh;
-	font-family: 'Orbitron', sans-serif;
+	padding-top: 2vh;
+	font-family: 'Bungee Inline', cursive;
 	font-size: 8.5vh;
 	margin-bottom: 5vh;
-
+	color: #686868;
 }
 
 #resume-holder-container {
 	padding-right: 25%;
 	padding-left: 25%;
+	padding-top: 2vh;
 }
 
 #resume {
@@ -186,13 +143,14 @@ img {
 }
 
 #contact {
-	padding-top: 7vh;
+	padding-top: 14vh;
 }
 
 #contact-header {
 	text-align: center;
-	font-family: 'Indie Flower', cursive;
-	font-size: 7vh;
+	font-family: 'Bungee Inline', cursive;
+	font-size: 8.5vh;
+	color: #686868;
 }
 
 .media-icon {
@@ -202,18 +160,10 @@ img {
 	display: block;
 }
 
-
-
-
-
-
-
-
-
 @media handheld, screen and (max-width: 560px){
 
 	#name {
-		font-size: 7vh;
+		font-size: 6vh;
 	}
 
 	#name-desc {
@@ -229,7 +179,7 @@ img {
 	}
 
 	#about-me {
-		height: 75vh;
+		height: 140vh;
 	}
 
 	#am-header {
@@ -279,7 +229,6 @@ img {
 
 	#contact-header {
 		text-align: center;
-		font-family: 'Indie Flower', cursive;
 		font-size: 7vh;
 	}
 
