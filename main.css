@@ -179,7 +179,7 @@ img {
 	}
 
 	#about-me {
-		height: 140vh;
+		height: 80vh;
 	}
 
 	#am-header {
@@ -187,7 +187,7 @@ img {
 	}
 
 	#am-content {
-		font-size: 3vh;
+		font-size: 2vh;
 	}
 
 	#skills-header {
@@ -212,6 +212,9 @@ img {
 	  height: 50vh;
 	}
 
+	#resume-holder {
+		height: 158vh;
+	}
 
 	.img-responsive {
 	    display: block;
@@ -247,7 +250,7 @@ img {
 	}
 
 	#resume-holder {
-		height: 200vh;
+		height: 180vh;
 	}
 
 	#contact-header {
