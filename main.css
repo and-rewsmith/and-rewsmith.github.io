@@ -183,6 +183,39 @@ img {
 	display: block;
 }
 
+@media handheld, screen and (max-width: 1024px){
+	#name-desc {
+	    font-size: 3vh;
+	}
+
+	.carousel-item {
+		height: 60vw;
+	}
+
+	.carousel {
+		width: 60vw;
+	}
+
+	.am-content {
+		font-size: 2.25vh;
+	}
+
+	.company-logo {
+		width: 75%;
+	}
+
+	#resume {
+	  height: 60vh;
+	}
+
+	#resume-holder {
+		height: 122vh;
+	}
+
+}
+
+
+
 @media handheld, screen and (max-width: 560px){
 
 	#name {
@@ -214,12 +247,10 @@ img {
 	}
 
 	#resume {
-	  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 	  height: 50vh;
 	}
 
 	#resume:hover {
-	  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 	  height: 50vh;
 	}
 
@@ -234,7 +265,7 @@ img {
 	}
 
 	#contact {
-		padding-top: 7vh;
+		padding-top: 12vh;
 	}
 
 	#contact-header {
@@ -274,4 +305,27 @@ img {
 	}
 
 	
+}
+
+
+@media handheld, screen and (min-width: 375px) and (max-width: 375px) and (min-height: 812px) and (max-height: 812px){
+	#name-desc {
+	    font-size: 1.75vh;
+	}
+
+	#transition {
+		height: 16vh;
+	}
+
+	#resume {
+	  height: 40vh;
+	}
+
+	#resume:hover {
+	  height: 40vh;
+	}
+
+	#resume-holder {
+		height: 141vh;
+	}
 }
