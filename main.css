@@ -150,7 +150,6 @@ body {
 #resume:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: scale(1,1);
-  height: 110vh;
   margin-left: auto;
   margin-right: auto;
 }
@@ -183,17 +182,32 @@ img {
 	display: block;
 }
 
-@media handheld, screen and (max-width: 1024px){
+@media (max-width: 1500px) {
+	#resume {
+		transition: none;
+	  	transform: none;
+	}
+
+	.carousel-item {
+		height: 40vh;
+	}
+
+	.carousel {
+		width: 40vh;
+	}
+}
+
+@media handheld, screen and (max-width: 1024px) {
 	#name-desc {
 	    font-size: 3vh;
 	}
 
 	.carousel-item {
-		height: 60vw;
+		height: 450px;
 	}
 
 	.carousel {
-		width: 60vw;
+		width: 450px;
 	}
 
 	.am-content {
@@ -216,7 +230,7 @@ img {
 
 
 
-@media handheld, screen and (max-width: 560px){
+@media handheld, screen and (max-width: 560px) {
 
 	#name {
 		font-size: 6vh;
@@ -286,7 +300,7 @@ img {
 
 
 
-@media handheld, screen and (orientation: landscape) and (max-device-width: 667px)  {
+@media handheld, screen and (orientation: landscape) and (max-device-width: 667px) {
 
 	#skills {
 		display: none;
@@ -308,7 +322,7 @@ img {
 }
 
 
-@media handheld, screen and (min-width: 375px) and (max-width: 375px) and (min-height: 812px) and (max-height: 812px){
+@media handheld, screen and (min-width: 375px) and (max-width: 375px) and (min-height: 812px) and (max-height: 812px) {
 	#name-desc {
 	    font-size: 1.75vh;
 	}
