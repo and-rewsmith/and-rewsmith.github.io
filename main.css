@@ -215,6 +215,12 @@ a:hover {
   text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #0074b1;
 }
 
+@media (min-width: 2000px) {
+  .fa {
+    font-size: 7em;
+  }
+}
+
 @media handheld, screen and (max-width: 1024px) {
 	#name-desc {
 	    font-size: 3vh;
@@ -248,6 +254,12 @@ a:hover {
     font-size: 5em; 
   }
 
+}
+
+@media (max-width: 1024px) and (max-height: 1365px){
+  .fa {
+  font-size: 3em;
+  }
 }
 
 @media handheld, screen and (min-width: 768px) and (max-width: 768px) and (min-height: 1024px) and (max-height: 1024px) {
@@ -285,8 +297,18 @@ a:hover {
   
 }
 
+@media (max-width: 800px) and (max-height: 300px) {
+  .fa {
+    font-size: 2em
+  }
 
-@media handheld, screen and (max-width: 560px) {
+  #resume-holder {
+    height: 135vh;
+  }
+}
+
+
+@media handheld, screen and (max-width: 575px) {
 
 	#name {
 		font-size: 6vh;
@@ -357,6 +379,18 @@ a:hover {
   }
 }
 
+@media (min-width: 461px) and (max-width: 575px) { 
+
+	.carousel-item {
+		height: 50vw;
+	}
+
+	.carousel {
+		width: 50vw;
+	}
+
+}
+
 
 
 
@@ -367,20 +401,86 @@ a:hover {
 	}
 
 	#resume-holder {
-		height: 160vh;
+		height: 145vh;
 	}
 
 	#contact-header {
 		font-size: 9vh;
 	}
 
-	#transition {
-		display: none;
-	}
-
+	/* #transition {   */
+	/* 	display: none; */
+	/* }               */
 	
 }
 
+/*pixel 2 landscape*/
+@media handheld, screen and (min-width: 731px) and (max-width: 731px) and (min-height: 411px) and (max-height: 411px) {
+	#resume-holder {
+		height: 135vh;
+	}
+}
+
+/*pixel 2 XL landscape*/
+@media handheld, screen and (min-width: 823px) and (max-width: 823px) and (min-height: 411px) and (max-height: 411px) {
+	#resume-holder {
+		height: 135vh;
+	}
+}
+
+/*iphone 5s landscape*/
+@media handheld, screen and (min-width: 568px) and (max-width: 568px) and (min-height: 320px) and (max-height: 320px) {
+  #resume-holder {
+    height: 195vh;
+  }
+
+  #transition {
+    height: 20vh; 
+  }
+
+	.carousel-item {
+		height: 25vw;
+	}
+
+	.carousel {
+		width: 25vw;
+	}
+
+}
+
+/*iphone 6,7,8 landscape*/
+@media handheld, screen and (min-width: 736px) and (max-width: 736px) and (min-height: 414px) and (max-height: 414px) {
+  #resume-holder {
+    height: 130vh;
+  }
+
+	.carousel-item {
+		height: 25vw;
+	}
+
+	.carousel {
+		width: 25vw;
+	}
+
+}
+
+/*iphone X landscape*/
+@media handheld, screen and (min-width: 812px) and (max-width: 812px) and (min-height: 375px) and (max-height: 375px) {
+
+  #resume-holder {
+    height: 135vh;
+  }
+
+}
+
+/*ipdad pro landscape*/
+@media handheld, screen and (min-width: 1366px) and (max-width: 1366812px) and (min-height: 1024px) and (max-height: 1024px) {
+
+  .fa {
+    font-size: 5em; 
+  }
+
+}
 
 @media handheld, screen and (min-width: 375px) and (max-width: 375px) and (min-height: 812px) and (max-height: 812px) {
 	#name-desc {
@@ -408,4 +508,10 @@ a:hover {
 	#resume-holder {
 		height: 150vh;
 	}
+}
+
+@media handheld, screen and (orientation: landscape) {
+  .company-logo {
+    width: 50%
+  }
 }
