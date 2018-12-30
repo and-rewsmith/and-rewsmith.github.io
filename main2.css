@@ -222,7 +222,7 @@ a:hover {
 
 
 
-/* Generic Mobile Styles */
+/* Generic Responsive Styles */
 
 @media (min-width: 2000px) {
   .fa {
@@ -230,7 +230,13 @@ a:hover {
   }
 }
 
-@media handheld, screen and (max-width: 1024px) {
+@media (max-width: 1250px) {
+  #resume {
+    height: 50vh; 
+  }
+}
+
+@media (max-width: 1024px) {
 	#name-desc {
 	    font-size: 3vh;
 	}
@@ -252,7 +258,7 @@ a:hover {
 	}
 
 	#resume {
-	  height: 60vh;
+	  height: 40vh;
 	}
 
   .fa {
@@ -271,45 +277,13 @@ a:hover {
   }
 }
 
-@media handheld, screen and (min-width: 768px) and (max-width: 768px) and (min-height: 1024px) and (max-height: 1024px) {
-	.carousel-item {
-		height: 450px;
-	}
-
-	.carousel {
-		width: 450px;
-	}
-
-	#name-desc {
-	    font-size: 3vh;
-	}
-
-	.am-content {
-		font-size: 2.25vh;
-	}
-
-	.company-logo {
-		width: 75%;
-	}
-
-	#resume {
-	  height: 30vh;
-	}
-
-  .fa {
-    font-size: 5em; 
-  }
-  
-}
-
 @media (max-width: 800px) and (max-height: 300px) {
   .fa {
     font-size: 2em
   }
 }
 
-
-@media handheld, screen and (max-width: 575px) {
+@media (max-width: 575px) {
 
 	#name {
 		font-size: 6vh;
@@ -404,6 +378,38 @@ a:hover {
 	
 }
 
+@media (max-width: 580px) and (max-height: 500px) {
+	
+  .carousel-item {
+		height: 150px;
+	}
+
+	.carousel {
+		width: 150px;
+	}
+
+  .company-logo {
+    width: 50%; 
+  }
+
+  #transition {
+    height: 100px;
+  }
+  
+}
+
+@media (max-height: 275px) {
+	
+  .carousel-item {
+		height: 75px;
+	}
+
+	.carousel {
+		width: 75px;
+	} 
+  
+}
+
 
 
 
@@ -469,4 +475,33 @@ a:hover {
 
 }
 
+@media (min-width: 768px) and (max-width: 768px) and (min-height: 1024px) and (max-height: 1024px) {
+	.carousel-item {
+		height: 450px;
+	}
 
+	.carousel {
+		width: 450px;
+	}
+
+	#name-desc {
+	    font-size: 3vh;
+	}
+
+	.am-content {
+		font-size: 2.25vh;
+	}
+
+	.company-logo {
+		width: 75%;
+	}
+
+	#resume {
+	  height: 30vh;
+	}
+
+  .fa {
+    font-size: 5em; 
+  }
+  
+}
