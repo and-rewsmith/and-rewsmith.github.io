@@ -318,13 +318,6 @@ a:hover {
 	#name-desc {
 	    font-size: 2vh;
 	}
-	.carousel-item {
-		height: 450px;
-	}
-
-	.carousel {
-		width: 450px;
-	}
 
 	.carousel-item {
 		height: 70vw;
