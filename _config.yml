@@ -18,8 +18,8 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-domain: and-rewsmith.github.io/docs       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
-url: https://and-rewsmith.github.io/docs  # the base hostname and protocol for your site, e.g. http://example.com
+domain: and-rewsmith.github.io       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
+url: https://and-rewsmith.github.io  # the base hostname and protocol for your site, e.g. http://example.com
 baseurl: /docs      # place folder name if the site is served in a subfolder
 
 title: Test title need to replace
