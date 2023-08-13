@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "I expected the GPT summarizers to be better..."
+title:  "I expected the GPT summarizers to be better"
 date:   2023-08-13 11:44:17 -0700
 categories: personal
 ---

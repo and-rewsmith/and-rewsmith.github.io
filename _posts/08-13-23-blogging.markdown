@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "I expected the GPT summarizers to be better..."
+title:  "Starting a blog?"
 date:   2023-08-13 11:44:17 -0700
 categories: personal
 ---
@@ -10,9 +10,13 @@ categories: personal
 I just had knee surgery a few days ago, and been sitting here trying to spend my time wisely. 
 
 I never really thought the idea of blogging appealed to me. But I've started reading some people's blogs I follow and have come to enjoy reading. I've been a bit injured lately with more alone time, so thought having a cool space just to splurge my thoughts would be nice. Some people I follow:
+
 [Andrej Karpathy](http://karpathy.github.io/)
+
 [George Hotz](https://geohot.github.io/blog/)
+
 [Jeff Shainline](https://www.nist.gov/people/jeff-shainline)
+
 [Lex Fridman](https://lexfridman.com/)
 
 ## What am I doing with my life?
