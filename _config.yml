@@ -25,7 +25,7 @@ url: https://and-rewsmith.github.io  # the base hostname and protocol for your s
 title: -@-@-
 email: andrew.smith.recruiting@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Personal, work, and research related thoughts.
+  Research, work, and personal thoughts.
 github_username:  and-rewsmith
 
 # Build settings
