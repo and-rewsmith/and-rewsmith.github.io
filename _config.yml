@@ -29,7 +29,10 @@ description: >- # this means to ignore newlines until "baseurl:"
 github_username:  and-rewsmith
 
 # Build settings
-theme: jekyll-theme-midnight
+theme: minima
+minima:
+  skin: dark
+
 plugins:
   - jekyll-feed
 
