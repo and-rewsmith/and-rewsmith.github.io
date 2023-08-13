@@ -36,7 +36,7 @@ I feel like I don't know enough right now to set a good path for myself. The cha
 
 I am having WAY more fun than I did in my past job. It seems nearly everything is better: people, work, creativity, self-management.
 
-It is hard to keep up with all the things I want to do, and I think if I had 10 Andrew's in my service I would still not accomplish everything. I'd like a way to mitigate this for myself though. The biggest draw on my time is reading research papers, which conflicts pretty heavily with my implementation heads-down time. I've been cutting it out more than I like, and I'd like to build a personal tool to make this part of my job better. I've been thinking of writing a pdf summarizer using gpt apis, but have been running into some challenges.
+It is hard to keep up with all the things I want to do, and I think if I had 10 Andrews in my service I would still not accomplish everything. I'd like a way to mitigate this for myself though. The biggest draw on my time is reading research papers, which conflicts pretty heavily with my implementation heads-down time. I've been cutting it out more than I like, and I'd like to build a personal tool to make this part of my job better. I've been thinking of writing a pdf summarizer using gpt apis, but have been running into some challenges.
 
 ## What do I expect to use this blog for?
 
