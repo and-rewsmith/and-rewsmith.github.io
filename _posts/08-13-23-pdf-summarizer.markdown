@@ -13,7 +13,8 @@ I want a tool to summarize research papers to get a high level overview without 
 
 
 The state of the art is stuff like this:
-https://www.intellippt.com/
+
+[intellippt](https://www.intellippt.com/)
 
 I am not a fan. First of all, you need to pay for it, and I feel exploited by that even if it isn't fair. Secondly, the summary it gives you back is not good. I think this can be done a lot better.
 
