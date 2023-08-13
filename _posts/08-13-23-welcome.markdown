@@ -19,7 +19,7 @@ Now some syntax like this:
 
 Now some syntax like this:
 {% highlight rust %}
-fn settings(&self) -> &Settings {
+fn settings(&self) -> Settings {
   self.settings.clone()
 }
 {% endhighlight %}
