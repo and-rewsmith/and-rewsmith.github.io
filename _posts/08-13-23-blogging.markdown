@@ -32,6 +32,13 @@ Sometimes I hear people I meet in my newly-found research community say that the
 
 I feel like I don't know enough right now to set a good path for myself. The change from a software engineer to a research role has been quite a bit different. There is a lot of context I am missing with respect to research, people in the field, my own preferences, etc.
 
+It seems like where I am going is either:
+1. Pursue a career in pure research, and understanding on how to contribute towards AGI. Likely always stay doing new things. I would definitely need a PhD.
+2. Pursue a career in research towards a financial goal, like finding something monetizable that works well. To do this one would need a PhD, and likely a lot of time doing pure research, starting from scratch over and over again, etc.
+3. Pursue a career in consuming research towards a financial goal. One may not necessarily need a PhD from this, but would stay on top of the current advances and be adept at implementing / scaling ideas from other people's research.
+
+I am not sure where I am headed. Going for a PhD seems like quite a bit more of a complicated and nuanced objective than I previously assumed.
+
 ## Thoughts about research so far?
 
 I am having WAY more fun than I did in my past job. It seems nearly everything is better: people, work, creativity, self-management.
