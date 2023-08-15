@@ -10,6 +10,7 @@ I hacked together a GPT summarizer over the last few weeks targeted at research 
 
 ## Motivation
 The motivation is that gpt tools exist to "talk to" a  PDF. But this is not what a large subset of people want. They want to use GPTs to get a summary. The tool I made abstracts that away. Here is my POC.
+<img src="../media/poc-summary.png" width="333" height="427" />
 
 The moat around this tool I expect to be short lived, but it will be there long enough to make money. The implementation was straightforward, but not totally so. Competitors would need to figure out how to use ML to segment text (cannot use openai for this due to increased cost and efficacy), and figure out how to prompt engineer the right style of summaries.
 
