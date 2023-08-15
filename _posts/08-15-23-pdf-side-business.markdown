@@ -49,5 +49,6 @@ Pay for server costs and openai costs
 Metrics
 - api calls to us
 - api calls to openai
-- api failures (per node)- api successes (per node)
+- api failures (per node)
+- api successes (per node)
 ```
