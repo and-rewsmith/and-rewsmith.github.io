@@ -23,5 +23,3 @@ I am not a fan. First of all, you need to pay for it, and I feel exploited by th
 I want something that segments the text into sections that I can match with the paper. Ideally these would be the numbered sections defined by the paper itself. Then I want a summary to be done for each of these sections with various prompting strategies, self reflection, etc.
 
 Something like this could be done with GPT3.5, and would be cheap. 
-
-I've actually tried to make this, but text segmentation is the hard part. GPT3.5 gets confused by all sorts of unexpected things and fails to segment text efficiently. GPT4 actually works very well, but is too expensive. Options I am exploring right now are a word2vec based solution and another based on [rupture](https://github.com/deepcharles/ruptures).
