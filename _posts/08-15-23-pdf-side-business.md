@@ -5,12 +5,15 @@ date:   2023-08-15 22:52:17 -0700
 categories: side-business
 ---
 
-I hacked together a GPT summarizer over the last few weeks targeted at research papers. I wrote about this problem here:https://and-rewsmith.github.io/personal/2023/08/13/pdf-summarizer.html
+## Update on the POC
+I hacked together a GPT summarizer over the last few weeks targeted at research papers. I wrote about this problem [here](https://and-rewsmith.github.io/personal/2023/08/13/pdf-summarizer.html).
 
+## Motivation
 The motivation is that gpt tools exist to "talk to" a  PDF. But this is not what a large subset of people want. They want to use GPTs to get a summary. The tool I made abstracts that away. Here is my POC.
 
 The moat around this tool I expect to be short lived, but it will be there long enough to make money. The implementation was straightforward, but not totally so. Competitors would need to figure out how to use ML to segment text (cannot use openai for this due to increased cost and efficacy), and figure out how to prompt engineer the right style of summaries.
 
+## Collaborate?
 The business model will be:
 - Users sign up via SSO.
 - Users get first few PDFs free.Have to pay for all the rest.
