@@ -83,7 +83,7 @@ The models right now are already sufficiently big. The current size is able to e
 
 The models should continue to get better, provided we can come up with new valuable tokens for training. At the same time, the model will get smaller, enabling phone LLMs and other resource constrained devices.
 
-Lastly, it is interesting to view that the [computation space and the input space are totally mixed](https://twitter.com/karpathy/status/1529288843207184384) with the current LLM implementation. That is fascinating, and something not seen with non-language data.
+Lastly, it is interesting to view that the [computation space and the input space are totally mixed](https://twitter.com/karpathy/status/1529288843207184384) with the current LLM implementation. That is fascinating, something not seen with non-language data, and __allows__ the Type II Reasoning systems to be built.
 
 
 ## 3: Focusing on what is next: Type II Reasoning
