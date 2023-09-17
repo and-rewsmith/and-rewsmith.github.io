@@ -69,13 +69,13 @@ Language models are well formed as an autoregressive structure. They predict fut
 
 But there also seems to be [emergent properties](https://arxiv.org/pdf/2206.07682.pdf) eminating at predictable thresholds.
 
-"Oh, but these language models are so bad at math."
+> "Oh, but these language models are so bad at math."
 
 OpenAI has made some really good changes and idk if this is really true anymore. Even still, one of the emergent properties from LLMs is the ability to decide and act to [use a given tool](https://arxiv.org/abs/2305.16291). That means the language model is able to shortcut a lot of its limitations.
 
 There is also a beauty in the way that a foundation model can be RLHF'd to be a specialized tool, giving the possibiltiy of a very powerful model for minimal training costs.
 
-"Oh, but these things still don't perform well on benchmarks and Sam Altman said the models will stop getting bigger."
+> "Oh, but these things still don't perform well on benchmarks and Sam Altman said the models will stop getting bigger."
 
 Firstly, I don't think that OpenAI knows the full extent of what they release. The current benchmark numbers don't capture approaches like tree-of-thoughts which are shown to [significantly boost MMLU benches](https://www.youtube.com/watch?v=wVzuvf9D9BU).
 
