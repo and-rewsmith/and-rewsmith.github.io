@@ -2,7 +2,7 @@
 layout: post
 title:  "Thoughts on LLMs, foundation models, and the future"
 date:   2023-08-15 02:52:17 -0700
-categories: side-business
+categories: personal
 ---
 
 ## 1: Where we are at now for generative language models?
