@@ -13,7 +13,7 @@ Transformers use backpropagation, which incurs high power usage, a limited conte
 
 The next phase of development, to be further developed over the next few years, is Type II Reasoning systems (like autoGPT, babyAGI, etc.). These Type II Reasoning Systems will embed the model within a framework that provides memory, agency, etc.
 
-Then after Type II Reasoning, comes other grandiose ideas being proposed like embodiment and distributed agent interatctions. I do think these will happen though, and at some arbitrary point the consensus will finally be that we have reached "AGI". But I am sure the goalpoasts will move many times in the coming future.
+Then after Type II Reasoning, comes other grandiose ideas being proposed like embodiment and distributed agent interactions. I do think these will happen though, and at some arbitrary point the consensus will finally be that we have reached "AGI". But I am sure the goalpost will move many times in the coming future.
 
 So in that concept, the hierarchical structure I imagine looks like this (from inner to outer):
 ```
@@ -73,7 +73,7 @@ But there also seems to be [emergent properties](https://arxiv.org/pdf/2206.0768
 
 OpenAI has made some really good changes and idk if this is really true anymore. Even still, one of the emergent properties from LLMs is the ability to decide and act to [use a given tool](https://arxiv.org/abs/2305.16291). That means the language model is able to shortcut a lot of its limitations.
 
-There is also a beauty in the way that a foundation model can be RLHF'd to be a specialized tool, giving the possibiltiy of a very powerful model for minimal training costs.
+There is also a beauty in the way that a foundation model can be RLHF'd to be a specialized tool, giving the possibility of a very powerful model for minimal training costs.
 
 > "Oh, but these things still don't perform well on benchmarks and Sam Altman said the models will stop getting bigger."
 
