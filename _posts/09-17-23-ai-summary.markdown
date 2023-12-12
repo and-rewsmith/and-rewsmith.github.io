@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Thoughts on LLMs, foundation models, and the future"
-date:   2023-08-15 02:52:17 -0700
+date:   2023-09-17 02:52:17 -0700
 categories: personal
 ---
 
