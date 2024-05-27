@@ -50,7 +50,7 @@ LLMs are good at doing things within their training set. When they get new tasks
 
 *In-context learning exists. The idea is to use short bursts of in-context learning to make high-value posts and comments to accelerate research.*
 
-## 4.1 Can this idea get trampled by improvements in the base GPT technology?
+### 4.1 Can this idea get trampled by improvements in the base GPT technology?
 
 Some ideas get trampled quite easily by advances in base models. For example, paper summarizers were shot dead in the water after GPT4 was released with higher context windows. Other ideas benefit from architectural advances in the base model, as these advances act as a rising tide that will raise all boats for ventures not competing with the base model.
 
