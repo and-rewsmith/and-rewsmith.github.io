@@ -1,0 +1,137 @@
+/* blog.css — shared styling for the blog index and posts.
+   Reuses the same palette / theme system as the main site. */
+:root {
+  --bg: #ffffff;
+  --ink: #1b1a18;
+  --ink-rgb: 27, 26, 24;
+  --accent-rgb: 106, 142, 234;
+  --accent: rgb(var(--accent-rgb));
+  --logo-stroke: #2b2b2b;
+  --c-pink: #ef476f; --c-mint: #06d6a0; --c-orange: #f78c6b; --c-purple: #9b5de5;
+  --c-teal: #0cb0a9; --c-yellow: #ffd166; --c-blue: #6a8eea;
+  --text: 720px;
+  --head: 1000px;
+  --pad: 2.5rem;
+}
+html[data-theme="dark"] {
+  --bg: #14151a;
+  --ink: #ececf1;
+  --ink-rgb: 236, 236, 241;
+  --accent-rgb: 138, 166, 240;
+  --logo-stroke: #0d0e12;
+  --c-pink: #f26889; --c-mint: #33ddb1; --c-orange: #f8a186; --c-purple: #ad7aea;
+  --c-teal: #38beb8; --c-yellow: #ffd982; --c-blue: #8aa6f0;
+}
+*, *::before, *::after { transition: background-color 0.45s ease; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none; } }
+@media (max-width: 700px) { :root { --pad: 1.4rem; } }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  max-width: var(--head);
+  margin: 0 auto;
+  padding: 1.5rem var(--pad);
+}
+.brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; color: var(--ink); }
+.brand .logo { height: 40px; width: auto; display: block; overflow: visible; }
+.brand .logo .tri { fill: var(--c); stroke: var(--logo-stroke); stroke-width: 7; stroke-linejoin: round; }
+header .name { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; }
+
+nav { margin-left: auto; display: flex; align-items: center; gap: 2.5rem; }
+nav a {
+  color: var(--ink); text-decoration: none; font-size: 1.15rem;
+  opacity: 0.6; transition: opacity 0.15s ease;
+}
+nav a:hover { opacity: 1; }
+
+.theme-toggle {
+  display: flex; align-items: center; justify-content: center;
+  width: 1.7rem; height: 1.7rem; padding: 0;
+  background: none; border: 0; cursor: pointer;
+  color: var(--ink); opacity: 0.6; transition: opacity 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.theme-toggle:hover { opacity: 1; }
+.theme-toggle svg { width: 1.2rem; height: 1.2rem; display: block; }
+.theme-toggle .icon-sun { display: none; }
+html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+main { max-width: var(--text); margin: 0 auto; padding: 3rem var(--pad) 2rem; }
+
+.page-title {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 600; letter-spacing: -0.02em; line-height: 1.1;
+}
+.page-sub { margin-top: 1rem; font-size: 1.1rem; color: rgba(var(--ink-rgb), 0.6); }
+
+/* Post list */
+.post-list { list-style: none; margin-top: 2.5rem; }
+.post-item { padding: 1.6rem 0; }
+.post-item + .post-item { border-top: 1px solid rgba(var(--ink-rgb), 0.09); }
+.post-item a { text-decoration: none; color: var(--ink); display: block; }
+.post-item .date {
+  font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600;
+}
+.post-item h2 {
+  font-size: 1.35rem; font-weight: 600; letter-spacing: -0.01em; margin-top: 0.4rem;
+  transition: color 0.15s ease;
+}
+.post-item a:hover h2 { color: var(--accent); }
+.post-item p { margin-top: 0.5rem; color: rgba(var(--ink-rgb), 0.66); line-height: 1.55; }
+
+/* Single post */
+.post-meta {
+  font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin-bottom: 0.8rem;
+}
+article h1 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 600; letter-spacing: -0.02em; line-height: 1.15;
+}
+article h2 {
+  font-size: 1.4rem; font-weight: 600; letter-spacing: -0.01em;
+  margin-top: 2.4rem; margin-bottom: 0.2rem;
+}
+article p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb), 0.82); margin-top: 1.2rem; }
+article p strong { color: var(--ink); font-weight: 600; }
+article ul, article ol { margin: 1.2rem 0 0 1.4rem; }
+article li { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb), 0.82); margin-top: 0.5rem; }
+article a {
+  color: var(--accent); text-decoration: underline;
+  text-decoration-color: rgba(var(--accent-rgb), 0.5); text-underline-offset: 3px;
+  transition: text-decoration-color 0.15s ease;
+}
+article a:hover { text-decoration-color: var(--accent); }
+article blockquote {
+  margin: 1.4rem 0; padding: 0.2rem 0 0.2rem 1.2rem;
+  border-left: 3px solid rgba(var(--accent-rgb), 0.5);
+  color: rgba(var(--ink-rgb), 0.7); font-style: italic;
+}
+article code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em; background: rgba(var(--ink-rgb), 0.06);
+  padding: 0.1em 0.35em; border-radius: 4px;
+}
+.back {
+  display: inline-block; margin-top: 3rem; font-size: 0.95rem; font-weight: 600;
+  color: var(--accent); text-decoration: none;
+}
+.back:hover { text-decoration: underline; }
+
+footer {
+  max-width: var(--text); margin: 0 auto;
+  padding: 2.5rem var(--pad);
+  border-top: 1px solid rgba(var(--ink-rgb), 0.09);
+  font-size: 0.85rem; color: rgba(var(--ink-rgb), 0.45);
+}
