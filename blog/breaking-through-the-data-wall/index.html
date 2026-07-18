@@ -307,10 +307,8 @@
           <div class="body">Averaged over all 39 novel classes, accuracy stays at the top of the chart as each new class arrives, and the classes learned first are recognized just as well at the end. There is no visible catastrophic interference at all.</div>
         </div>
         <p>
-          Because each class is a separate entry in the associative memory, storing a new one does
-          not compete with the classes already there. The memory learns online, one shot at a time,
-          and keeps everything it has already stored. The catastrophic forgetting we saw earlier is a
-          property of gradient descent on shared weights, not of learning new things.
+          The catastrophic forgetting we saw earlier is a property of gradient descent on shared
+          weights, not of learning new things.
         </p>
         <p>
           One subtler failure is left to rule out. Even a memory can smear its entries together, so
