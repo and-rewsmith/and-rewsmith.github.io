@@ -117,20 +117,18 @@
           clever loss function. Most of the field is not building this way, and we think that is a
           mistake.
         </p>
-        <p>A working CLS rests on six pillars. We will build each one as we go.</p>
+        <p>A working CLS rests on five pillars. We will build each one as we go.</p>
         <ol class="pillars">
           <li><span class="goal">Avoid catastrophic forgetting in the primary network.</span>
               <span class="how"><b>Freeze it</b> once pretraining is done.</span></li>
-          <li><span class="goal">Sample-efficient online learning at deployment.</span>
-              <span class="how">Make the secondary network an <b>associative memory</b>.</span></li>
-          <li><span class="goal">Avoid catastrophic forgetting in the secondary network.</span>
-              <span class="how">Make the secondary network an <b>associative memory</b>.</span></li>
           <li><span class="goal">Keep entries in the secondary network from corrupting each other.</span>
               <span class="how">Read and write to the associative memory <b>sparsely</b>.</span></li>
           <li><span class="goal">Engage the secondary network only when it is needed.</span>
               <span class="how"><b>Route at inference by novelty</b>.</span></li>
+          <li><span class="goal">Sample-efficient online learning at deployment.</span>
+              <span class="how">Make the secondary network an <b>associative memory</b>.</span></li>
           <li><span class="goal">Free up room in the secondary network over time.</span>
-              <span class="how"><b>Consolidate</b> into the primary network, through the replay of compressed patterns.</span></li>
+              <span class="how"><b>Consolidate</b> into the base network, through the replay of compressed patterns.</span></li>
         </ol>
       </section>
 
@@ -290,7 +288,7 @@
         </p>
         <div class="pillar"><div class="tag">Pillar 1 · done</div><div class="body">
           <strong>The primary network cannot forget</strong> because we freeze it at deployment.
-          Everything the base classes rely on is now permanent.
+          Everything the base classes rely on is now fixed.
         </div></div>
 
         <h3>Learning new classes</h3>
@@ -309,16 +307,11 @@
           <div class="body">Averaged over all 39 novel classes, accuracy stays at the top of the chart as each new class arrives, and the classes learned first are recognized just as well at the end. There is no visible catastrophic interference at all.</div>
         </div>
         <p>
-          Two of the six pillars are in place right here. Making the secondary network an
-          associative memory is what lets it learn online, one shot at a time, and keep everything
-          it has already stored. The catastrophic forgetting we saw earlier is a property of
-          gradient descent on shared weights, not of learning new things.
+          Because each class is a separate entry in the associative memory, storing a new one does
+          not compete with the classes already there. The memory learns online, one shot at a time,
+          and keeps everything it has already stored. The catastrophic forgetting we saw earlier is a
+          property of gradient descent on shared weights, not of learning new things.
         </p>
-        <div class="pillar"><div class="tag">Pillars 2 &amp; 3 · done</div><div class="body">
-          <strong>Sample-efficient online learning</strong> and <strong>no forgetting in the
-          secondary network</strong>, both from making the secondary network an associative memory
-          rather than a gradient-trained classifier.
-        </div></div>
         <p>
           One subtler failure is left to rule out. Even a memory can smear its entries together, so
           that writing one class quietly damages another. We avoid that by reading and writing the
@@ -326,7 +319,7 @@
           frozen base, this means we never modify the information the earlier classes rely on. In
           principle all of it is preserved, as long as we route to it correctly at inference.
         </p>
-        <div class="pillar"><div class="tag">Pillar 4 · done</div><div class="body">
+        <div class="pillar"><div class="tag">Pillar 2 · done</div><div class="body">
           <strong>Entries do not corrupt each other</strong> because reads and writes are sparse, so
           storing one class does not overwrite another.
         </div></div>
@@ -344,7 +337,7 @@
           <div class="frame"><img src="assets/routing.png" alt="Two panels, training and validation. Bars for the base network, the associative memory, and the full routed system, with a dashed line marking a perfect oracle router in each." /></div>
           <figcaption>Routing quality on the training set (left) and held-out validation set (right): the base network on its classes, the memory on the novel ones, and the full routed system on all 49. The dashed line is a perfect router; ours recovers about 97% of it on validation.</figcaption>
         </figure>
-        <div class="pillar"><div class="tag">Pillar 5 · done</div><div class="body">
+        <div class="pillar"><div class="tag">Pillar 3 · done</div><div class="body">
           <strong>The secondary network is engaged only when needed</strong>, using EGTO's novelty
           signal to route each input between the frozen base and the memory.
         </div></div>
@@ -360,24 +353,28 @@
           <div class="frame"><img src="assets/sample_efficiency.png" alt="Two panels, training and validation. Accuracy on a novel class versus the number of examples seen of it on a log axis, rising steeply from a single example, with a shaded band showing the spread across classes." /></div>
           <figcaption>Accuracy on a novel class versus how many examples of it the system has seen, on the training set (left) and held-out validation set (right). The line is the mean over classes and the band is one standard deviation across them.</figcaption>
         </figure>
+        <div class="pillar"><div class="tag">Pillar 4 · done</div><div class="body">
+          <strong>Sample-efficient online learning at deployment</strong>, because the associative
+          memory estimates a new class from a handful of examples rather than many gradient steps.
+        </div></div>
       </section>
 
       <section>
         <h2>What comes next</h2>
         <p>
-          Five of the six pillars are complete. The memory learns new classes online, in one
+          Four of the five pillars are complete. The memory learns new classes online, in one
           shot, without forgetting and without disturbing the frozen base, and the system knows when
           to reach for it. The pillar we have not built yet is consolidation: the transfer of
           information from associative memory to the base network.
         </p>
         <p>
           Biology implements consolidation by slowly moving stable patterns out of the fast
-          memory and into the permanent network, which frees the memory to keep learning. It does
+          memory and into the base network, which frees the memory to keep learning. It does
           this through replaying compressed patterns. Consolidation from the memory
           back into the base is where much of our current work is going, and it is the natural next
           step for the architecture behind everything above.
         </p>
-        <div class="pillar todo"><div class="tag">Pillar 6 · in progress</div><div class="body">
+        <div class="pillar todo"><div class="tag">Pillar 5 · in progress</div><div class="body">
           <strong>Free up room in the memory over time</strong> by consolidating settled knowledge
           into the base network, through the replay of compressed patterns. This is what we are building now.
         </div></div>
