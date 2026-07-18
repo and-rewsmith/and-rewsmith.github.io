@@ -139,7 +139,7 @@ export class Ball {
     return new THREE.Mesh(geo, mat);
   }
 
-  // Faceted polyhedron whose triangular faces are flat-shaded in the lamulent
+  // Faceted polyhedron whose triangular faces are flat-shaded in the site's
   // logo palette and outlined with dark seams — a colourful "triangle" gem that
   // echoes the logo's triangle motif. Rolling reveals different coloured faces.
   _buildFacetedBall(theme) {

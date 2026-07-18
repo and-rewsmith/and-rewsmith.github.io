@@ -1,4 +1,4 @@
-// Mounts the interactive energy-landscape widget into the lamulent hero.
+// Mounts the interactive energy-landscape widget into the hero.
 // Tuned to the site's clean white look (white backdrop, no frosted paper).
 
 import { ElevationWidget } from './widget.js';
