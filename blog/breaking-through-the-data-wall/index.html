@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- PASSWORD GATE (this post only) - remove this line + gate.js to make it public -->
+  <script src="gate.js"></script>
+
+  <title>Breaking through the data wall · andrew smith</title>
+  <meta name="description" content="For real-world autonomy, the bottleneck is learning after deployment rather than collecting more data. We show how a Complementary Learning System on top of EGTO learns new classes one at a time without forgetting." />
+  <link rel="canonical" href="https://and-rewsmith.github.io/blog/breaking-through-the-data-wall/" />
+  <meta name="theme-color" content="#6a8eea" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Andrew Smith" />
+  <meta property="og:title" content="Breaking through the data wall" />
+  <meta property="og:description" content="Real-world autonomy needs systems that keep learning after deployment. Here is our first Complementary Learning System, built on EGTO." />
+  <meta property="og:url" content="https://and-rewsmith.github.io/blog/breaking-through-the-data-wall/" />
+  <meta property="og:image" content="https://and-rewsmith.github.io/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Breaking through the data wall" />
+  <meta name="twitter:description" content="Real-world autonomy needs systems that keep learning after deployment. Here is our first Complementary Learning System, built on EGTO." />
+  <meta name="twitter:image" content="https://and-rewsmith.github.io/og-image.png" />
+
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');   // gate scroll-reveal so figures stay visible without JS
+      try {
+        var q = new URLSearchParams(location.search).get('theme');
+        var s = (q === 'dark' || q === 'light') ? q : localStorage.getItem('theme');
+        document.documentElement.dataset.theme = s === 'dark' ? 'dark' : 'light';
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="post.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="/">
+      <svg class="logo" viewBox="-10 -10 937 532" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="andrew smith logo">
+        <polygon class="tri" style="--i:0; --c:var(--c-pink)" points="20,307 230,307 125,487" />
+        <polygon class="tri" style="--i:1; --c:var(--c-mint)" points="249,115 147,292 352,292" />
+        <polygon class="tri" style="--i:2; --c:var(--c-orange)" points="433,23 333,196 533,196" />
+        <polygon class="tri" style="--i:3; --c:var(--c-purple)" points="332,211 535,211 433,386" />
+        <polygon class="tri" style="--i:4; --c:var(--c-teal)" points="553,224 451,400 655,400" />
+        <polygon class="tri" style="--i:5; --c:var(--c-yellow)" points="571,210 774,210 672,386" />
+        <polygon class="tri" style="--i:6; --c:var(--c-blue)" points="794,223 692,400 897,400" />
+      </svg>
+      <span class="name">andrew smith</span>
+    </a>
+    <nav>
+      <a href="/blog/">blog</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <div class="post-header">
+      <h1>Breaking through the data wall</h1>
+      <div class="meta">Andrew Smith · July 17, 2026</div>
+      <p class="dek">
+        The whole industry has a problem. There is a myopic obsession with reducing test loss. In the
+        face of data walls and sim2real gaps, the field is grinding a rapid burn of capital with
+        limited success in fundamentally unblocking general autonomy.
+      </p>
+      <p class="dek">
+        We can do more than compress the dataset and task tune it; there is another way forwards.
+      </p>
+    </div>
+
+    <div class="tldr">
+      <div class="tldr-tag">TL;DR</div>
+      <ul>
+        <li>The real bottleneck for real-world autonomy is <strong>learning after deployment</strong>, not only collecting more data.</li>
+        <li>Ordinary networks fall apart when classes arrive <strong>one at a time from a single pass</strong>.</li>
+        <li><strong>Complementary Learning Systems (CLS)</strong> fixes this at the systems level: keep a base network frozen, put new knowledge in a separate associative memory, and route between them by novelty.</li>
+        <li>Our system, built on <strong>EGTO</strong>, learns 39 new classes one at a time with almost no forgetting, routes within a few points of a perfect router, and needs only a handful of examples per class.</li>
+        <li>Adding classes to the memory one after another is <strong>effectively lossless</strong>.</li>
+        <li>What we are building now: <strong>consolidation</strong>, moving settled knowledge from the memory back into the base through replay of compressed patterns.</li>
+      </ul>
+    </div>
+
+    <article>
+      <section>
+        <h2>After the data wall</h2>
+        <p>
+          A lot of the field is organized around one idea: get more data. Data is turning into its
+          own industry, and world models promise to manufacture experience wherever real data runs
+          short. That work is worth doing. But imagine it all succeeds and data is no longer the
+          limit. A system that has to act in the physical world still meets the sim-to-real gap.
+          The distribution it trained on is never quite the distribution it wakes up in.
+        </p>
+        <p>
+          Closing that gap has less to do with data than with learning. A deployed system runs into
+          situations no dataset planned for, and it has to absorb them while it operates, without
+          unraveling what it already knew. Continual, online adaptation like this is one of the
+          oldest unsolved problems in neural networks. We think this problem, not data, is what
+          stands between today's models and real autonomy.
+        </p>
+      </section>
+
+      <section>
+        <h2>A systems-level answer</h2>
+        <p>
+          Continual learning already has a strong blueprint, and it comes from the brain. Biology
+          does not solve online learning with a single network. It uses two that work together. A
+          fast-learning hippocampus captures new experience in one shot, and a slow-learning cortex
+          folds that experience into stable, general structure over time. This is the Complementary
+          Learning Systems (CLS) methodology. What matters is that it is a
+          systems-level answer: the capability comes from how the parts are arranged, not from a
+          clever loss function. Most of the field is not building this way, and we think that is a
+          mistake.
+        </p>
+        <p>A working CLS rests on six pillars. We will build each one as we go.</p>
+        <ol class="pillars">
+          <li><span class="goal">Avoid catastrophic forgetting in the primary network.</span>
+              <span class="how"><b>Freeze it</b> once pretraining is done.</span></li>
+          <li><span class="goal">Sample-efficient online learning at deployment.</span>
+              <span class="how">Make the secondary network an <b>associative memory</b>.</span></li>
+          <li><span class="goal">Avoid catastrophic forgetting in the secondary network.</span>
+              <span class="how">Make the secondary network an <b>associative memory</b>.</span></li>
+          <li><span class="goal">Keep entries in the secondary network from corrupting each other.</span>
+              <span class="how">Read and write to the associative memory <b>sparsely</b>.</span></li>
+          <li><span class="goal">Engage the secondary network only when it is needed.</span>
+              <span class="how"><b>Route at inference by novelty</b>.</span></li>
+          <li><span class="goal">Free up room in the secondary network over time.</span>
+              <span class="how"><b>Consolidate</b> into the primary network, through the replay of compressed patterns.</span></li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>The task</h2>
+        <p>
+          To test any of this honestly, the benchmark has to look like the world rather than a
+          shuffled dataset. We use Kuzushiji-49, a set of 49 cursive Japanese characters drawn from
+          historical woodblock-printed books. Each character is a 28 by 28 grayscale image, and the
+          handwriting is genuinely varied. Here is one example of each of the 49 classes.
+        </p>
+        <figure class="dataset reveal">
+          <div class="frame"><img src="assets/dataset_examples.png" alt="A 7 by 7 grid showing one handwritten example of each of the 49 Kuzushiji characters, black ink on white." /></div>
+          <figcaption>Kuzushiji-49: one sample of each of the 49 classes. Cursive, historical, and far from uniform.</figcaption>
+        </figure>
+        <p>
+          The hard part is how the data arrives. Real streams are single-sample, meaning you see
+          one example at a time instead of a batch, and they are badly non-IID. You get flooded
+          with one kind of input, it disappears, and it may never come back, yet you still had to
+          learn it. We reproduce this directly. A system learns the first ten classes up front, the
+          way pretraining works before deployment. Then the other 39 classes arrive as a stream:
+          every example of one new class, then never again, then the next class, and so on. After
+          each new class we check how much of everything earlier the system still knows. This
+          single-sample, class-incremental setting is widely considered one of the hardest in
+          continual learning.
+        </p>
+        <figure class="diagram stream-svg reveal noclip">
+          <svg viewBox="0 0 720 250" role="img" aria-label="Timeline of the protocol: a pretraining phase learns classes 0 to 9 from shuffled batches; the base is then frozen at deployment; afterwards the remaining classes arrive one at a time as a single-sample stream, each seen once.">
+            <defs>
+              <marker id="ah2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+                <path class="arrowfill" d="M0,0 L9,4.5 L0,9 z" />
+              </marker>
+            </defs>
+
+            <!-- phase headers -->
+            <text class="lab" x="128" y="20" text-anchor="middle">Pretraining</text>
+            <text class="lab" x="486" y="20" text-anchor="middle">Online learning at deployment</text>
+            <path class="bracket" d="M30,34 L30,29 L226,29 L226,34" />
+            <path class="bracket" d="M270,34 L270,29 L700,29 L700,34" />
+
+            <!-- pretraining block: classes 0-9 shuffled together -->
+            <rect class="node" x="30" y="52" width="196" height="110" rx="12" />
+            <rect x="47"  y="68"  width="26" height="26" rx="6" fill="var(--c-pink)" />
+            <rect x="81"  y="68"  width="26" height="26" rx="6" fill="var(--c-mint)" />
+            <rect x="115" y="68"  width="26" height="26" rx="6" fill="var(--c-orange)" />
+            <rect x="149" y="68"  width="26" height="26" rx="6" fill="var(--c-purple)" />
+            <rect x="183" y="68"  width="26" height="26" rx="6" fill="var(--c-teal)" />
+            <rect x="47"  y="102" width="26" height="26" rx="6" fill="var(--c-yellow)" />
+            <rect x="81"  y="102" width="26" height="26" rx="6" fill="var(--c-ocean)" />
+            <rect x="115" y="102" width="26" height="26" rx="6" fill="var(--c-blue)" />
+            <rect x="149" y="102" width="26" height="26" rx="6" fill="var(--c-pink)" />
+            <rect x="183" y="102" width="26" height="26" rx="6" fill="var(--c-mint)" />
+            <text class="sub" x="128" y="150" text-anchor="middle">classes 0-9, shuffled (IID)</text>
+
+            <!-- phase divider -->
+            <line class="divider" x1="248" y1="44" x2="248" y2="196" />
+
+            <!-- the stream: one new class at a time -->
+            <text class="sub" x="486" y="58" text-anchor="middle">one new class at a time, then gone</text>
+            <g class="stream-tile" style="--k:0"><rect x="272" y="78" width="52" height="52" rx="11" fill="var(--c-mint)" /><text class="tile-num" x="298" y="111" text-anchor="middle">10</text></g>
+            <g class="stream-tile" style="--k:1"><rect x="340" y="78" width="52" height="52" rx="11" fill="var(--c-orange)" /><text class="tile-num" x="366" y="111" text-anchor="middle">11</text></g>
+            <g class="stream-tile" style="--k:2"><rect x="408" y="78" width="52" height="52" rx="11" fill="var(--c-purple)" /><text class="tile-num" x="434" y="111" text-anchor="middle">12</text></g>
+            <g class="stream-tile" style="--k:3"><rect x="476" y="78" width="52" height="52" rx="11" fill="var(--c-teal)" /><text class="tile-num" x="502" y="111" text-anchor="middle">13</text></g>
+            <text class="ell" x="556" y="112" text-anchor="middle">…</text>
+            <g class="stream-tile" style="--k:4"><rect x="596" y="78" width="52" height="52" rx="11" fill="var(--c-blue)" /><text class="tile-num" x="622" y="111" text-anchor="middle">48</text></g>
+            <text class="sub" x="486" y="150" text-anchor="middle">each seen once; then we test what is still known</text>
+
+            <!-- time axis -->
+            <line class="edge" x1="30" y1="220" x2="694" y2="220" marker-end="url(#ah2)" style="--len:680" />
+            <text class="sub" x="694" y="212" text-anchor="end">time</text>
+          </svg>
+          <figcaption>The protocol. Classes 0-9 are learned up front from shuffled batches; the base is then
+          frozen. After deployment the remaining 39 classes arrive one at a time, each seen once, and after every
+          new class we measure how much of everything earlier is retained.</figcaption>
+        </figure>
+      </section>
+
+      <section>
+        <h2>How standard networks do</h2>
+        <p>
+          Ordinary networks fail this right away. We trained two of them on the stream, a
+          multilayer perceptron and a recurrent network, and then added a standard remedy,
+          Elastic Weight Consolidation, to both. All four collapse. Learning a new class overwrites
+          the weights the earlier classes needed, and with none of the old data present, nothing
+          pulls those weights back. EWC does not save it. It can protect the old classes only by
+          refusing to learn the new ones, so its accuracy over everything stays just as low.
+        </p>
+        <figure class="fig wide reveal">
+          <div class="frame"><img src="assets/baselines_forgetting.png" alt="Two panels. Left: accuracy on the first ten classes as novel classes stream in, collapsing for the MLP and RNN; the EWC variants trade the new classes away to hold the old. Right: accuracy over all classes seen so far, decaying toward chance for every baseline." /></div>
+          <figcaption>Two views of the same failure. Left: memory of the first ten classes drains away as new classes stream in. Right: accuracy over every class seen so far sinks toward chance. This is the behavior our system has to beat.</figcaption>
+        </figure>
+      </section>
+
+      <section>
+        <h2>Our approach</h2>
+        <p>
+          Our system is the first Complementary Learning System we have built on top of EGTO, our
+          energy-based architecture. It has three parts, and they line up with the blueprint above:
+          a base network learned during pretraining, an associative memory that takes on the novel
+          classes, and a router that decides, per input, which one to trust.
+        </p>
+        <figure class="diagram reveal noclip">
+          <svg viewBox="0 0 720 250" role="img" aria-label="System diagram: an input goes to a novelty router, which sends familiar inputs to a frozen base network and novel inputs to an associative memory; both feed the prediction.">
+            <defs>
+              <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+                <path class="arrowfill" d="M0,0 L9,4.5 L0,9 z" />
+              </marker>
+            </defs>
+            <rect class="node" x="10" y="101" width="96" height="48" rx="10" />
+            <text class="lab" x="58" y="130" text-anchor="middle">input</text>
+
+            <polygon class="node accent" points="200,84 254,125 200,166 146,125" />
+            <text class="lab" x="200" y="121" text-anchor="middle">novelty</text>
+            <text class="sub" x="200" y="138" text-anchor="middle">router</text>
+
+            <rect class="node" x="336" y="38" width="214" height="64" rx="12" />
+            <text class="lab" x="443" y="64" text-anchor="middle">Frozen base network</text>
+            <text class="sub" x="443" y="83" text-anchor="middle">base classes · never updated</text>
+
+            <rect class="node accent" x="336" y="148" width="214" height="64" rx="12" />
+            <text class="lab" x="443" y="174" text-anchor="middle">Associative memory</text>
+            <text class="sub" x="443" y="193" text-anchor="middle">novel classes · sparse writes</text>
+
+            <rect class="node" x="614" y="101" width="98" height="48" rx="10" />
+            <text class="lab" x="663" y="130" text-anchor="middle">prediction</text>
+
+            <path class="edge" d="M106,125 L144,125" marker-end="url(#ah)" style="--len:60" />
+            <path class="edge" d="M233,107 C288,80 300,70 334,70" marker-end="url(#ah)" style="--len:150" />
+            <path class="edge" d="M233,143 C288,170 300,180 334,180" marker-end="url(#ah)" style="--len:150" />
+            <path class="edge" d="M550,70 C588,70 600,102 612,118" marker-end="url(#ah)" style="--len:150" />
+            <path class="edge" d="M550,180 C588,180 600,148 612,132" marker-end="url(#ah)" style="--len:150" />
+            <text class="edgelab" x="298" y="86" text-anchor="middle">familiar</text>
+            <text class="edgelab" x="298" y="170" text-anchor="middle">novel</text>
+          </svg>
+          <figcaption>The two systems stay separate, divided by a novelty signal. The base is frozen; only the memory grows.</figcaption>
+        </figure>
+        <p>
+          Keeping the systems separate is what makes this work, and it is where EGTO pays off. An
+          energy-based model reports, on its own, how well an input fits what it already knows, so
+          the question "is this new?" is a measurement the architecture already makes.
+        </p>
+
+        <h3>The base network</h3>
+        <p>
+          The base network is what we build before anything is deployed. There is not much to say
+          about it, which is the point. It learns the base classes cleanly and reaches strong
+          accuracy.
+        </p>
+        <figure class="fig reveal">
+          <div class="frame"><img src="assets/base_accuracy.png" alt="A single accuracy curve rising over training epochs and settling near 0.96 on the base classes." /></div>
+          <figcaption>The base network learns the base classes without difficulty during pretraining.</figcaption>
+        </figure>
+        <p>
+          Deployment is the moment we stop pretraining and put the system to work. At that moment we
+          freeze the base network. It is never touched by gradient descent again. If the base never
+          changes, it cannot forget.
+        </p>
+        <div class="pillar"><div class="tag">Pillar 1 · done</div><div class="body">
+          <strong>The primary network cannot forget</strong> because we freeze it at deployment.
+          Everything the base classes rely on is now permanent.
+        </div></div>
+
+        <h3>Learning new classes</h3>
+        <p>
+          New classes never touch the frozen base. Each one is written into the associative memory
+          instead. Because the memory is not a gradient-trained head, storing a new class does not
+          compete with the classes already there. Training on all 39 novel classes one at a time
+          produces the plot the baselines could not.
+        </p>
+        <figure class="fig wide reveal">
+          <div class="frame"><img src="assets/novel_incremental.png" alt="Two panels, training and held-out validation. Faint lines, one per novel class, stay near the top as more classes are added, and a bold average line barely declines." /></div>
+          <figcaption>Novel classes added one at a time (single-sample stream), on the training set (left) and held-out validation set (right). Faint lines are individual classes; the bold line is their average.</figcaption>
+        </figure>
+        <div class="result">
+          <div class="big">Adding classes to the memory is effectively lossless.</div>
+          <div class="body">Averaged over all 39 novel classes, accuracy stays at the top of the chart as each new class arrives, and the classes learned first are recognized just as well at the end. There is no visible catastrophic interference at all.</div>
+        </div>
+        <p>
+          Two of the six pillars are in place right here. Making the secondary network an
+          associative memory is what lets it learn online, one shot at a time, and keep everything
+          it has already stored. The catastrophic forgetting we saw earlier is a property of
+          gradient descent on shared weights, not of learning new things.
+        </p>
+        <div class="pillar"><div class="tag">Pillars 2 &amp; 3 · done</div><div class="body">
+          <strong>Sample-efficient online learning</strong> and <strong>no forgetting in the
+          secondary network</strong>, both from making the secondary network an associative memory
+          rather than a gradient-trained classifier.
+        </div></div>
+        <p>
+          One subtler failure is left to rule out. Even a memory can smear its entries together, so
+          that writing one class quietly damages another. We avoid that by reading and writing the
+          memory sparsely, so each class lives in a nearly separate part of it. Together with the
+          frozen base, this means we never modify the information the earlier classes rely on. In
+          principle all of it is preserved, as long as we route to it correctly at inference.
+        </p>
+        <div class="pillar"><div class="tag">Pillar 4 · done</div><div class="body">
+          <strong>Entries do not corrupt each other</strong> because reads and writes are sparse, so
+          storing one class does not overwrite another.
+        </div></div>
+
+        <h3>Routing</h3>
+        <p>
+          That condition, routing correctly, is the whole game at inference. For each input the
+          system has to decide whether the frozen base already handles it or whether it belongs to
+          the memory, and it has to decide without the label. Good routing makes the preserved
+          knowledge usable. Bad routing wastes it. EGTO's energy gives a clean novelty signal, and
+          the routing lands close to optimal. Across all 49 classes the routed system recovers about
+          97% of what a perfect router would get.
+        </p>
+        <figure class="fig wide reveal">
+          <div class="frame"><img src="assets/routing.png" alt="Two panels, training and validation. Bars for the base network, the associative memory, and the full routed system, with a dashed line marking a perfect oracle router in each." /></div>
+          <figcaption>Routing quality on the training set (left) and held-out validation set (right): the base network on its classes, the memory on the novel ones, and the full routed system on all 49. The dashed line is a perfect router; ours recovers about 97% of it on validation.</figcaption>
+        </figure>
+        <div class="pillar"><div class="tag">Pillar 5 · done</div><div class="body">
+          <strong>The secondary network is engaged only when needed</strong>, using EGTO's novelty
+          signal to route each input between the frozen base and the memory.
+        </div></div>
+
+        <h3>Sample efficiency</h3>
+        <p>
+          The last question is the one a real stream cares about most. When a new class shows up, how
+          many examples does it take to learn it? If the answer is hundreds, you have not solved
+          online learning, because the input will be long gone. Here a single example already carries
+          most of the way, and a few more finish the job.
+        </p>
+        <figure class="fig wide reveal">
+          <div class="frame"><img src="assets/sample_efficiency.png" alt="Two panels, training and validation. Accuracy on a novel class versus the number of examples seen of it on a log axis, rising steeply from a single example, with a shaded band showing the spread across classes." /></div>
+          <figcaption>Accuracy on a novel class versus how many examples of it the system has seen, on the training set (left) and held-out validation set (right). The line is the mean over classes and the band is one standard deviation across them.</figcaption>
+        </figure>
+      </section>
+
+      <section>
+        <h2>What comes next</h2>
+        <p>
+          Five of the six pillars are complete. The memory learns new classes online, in one
+          shot, without forgetting and without disturbing the frozen base, and the system knows when
+          to reach for it. The pillar we have not built yet is consolidation: the transfer of
+          information from associative memory to the base network.
+        </p>
+        <p>
+          Biology implements consolidation by slowly moving stable patterns out of the fast
+          memory and into the permanent network, which frees the memory to keep learning. It does
+          this through replaying compressed patterns. Consolidation from the memory
+          back into the base is where much of our current work is going, and it is the natural next
+          step for the architecture behind everything above.
+        </p>
+        <div class="pillar todo"><div class="tag">Pillar 6 · in progress</div><div class="body">
+          <strong>Free up room in the memory over time</strong> by consolidating settled knowledge
+          into the base network, through the replay of compressed patterns. This is what we are building now.
+        </div></div>
+        <p>
+          EGTO is the perfect starting point for our research, as Energy-Based Models inherently
+          represent the training data from which the landscape was crafted. This allows a rather
+          straightforward path towards preserving the representation of that training data inside the
+          network. We strive to engineer a stable, robust, and complete consolidation architecture that
+          can non-destructively merge the policy of the associative memory into the base network.
+        </p>
+      </section>
+    </article>
+  </main>
+
+  <footer>© 2026 andrew smith</footer>
+  <script src="/theme.js" defer></script>
+  <script>
+    /* Scroll-reveal (inlined so it cannot 404): add .in to .reveal elements as they enter view. */
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce || !('IntersectionObserver' in window)) {
+        for (var i = 0; i < els.length; i++) els[i].classList.add('in');
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+  </script>
+</body>
+</html>
