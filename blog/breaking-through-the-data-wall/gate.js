@@ -43,7 +43,7 @@
   gate.id = "site-gate";
   gate.innerHTML =
     '<div class="box">' +
-    '<h1>lamulent</h1>' +
+    '<h1>andrew smith</h1>' +
     '<input id="gate-pw" type="password" autocomplete="off" spellcheck="false" placeholder="Password" aria-label="Password" />' +
     '<button id="gate-go" type="button">Enter</button>' +
     '<div class="err" id="gate-err"></div>' +
