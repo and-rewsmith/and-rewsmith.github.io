@@ -187,15 +187,42 @@
             <!-- phase divider -->
             <line class="divider" x1="248" y1="44" x2="248" y2="196" />
 
-            <!-- the stream: one new class at a time -->
-            <text class="sub" x="486" y="58" text-anchor="middle">one new class at a time, then gone</text>
-            <g class="stream-tile" style="--k:0"><rect x="272" y="78" width="52" height="52" rx="11" fill="var(--c-mint)" /><text class="tile-num" x="298" y="111" text-anchor="middle">10</text></g>
-            <g class="stream-tile" style="--k:1"><rect x="340" y="78" width="52" height="52" rx="11" fill="var(--c-orange)" /><text class="tile-num" x="366" y="111" text-anchor="middle">11</text></g>
-            <g class="stream-tile" style="--k:2"><rect x="408" y="78" width="52" height="52" rx="11" fill="var(--c-purple)" /><text class="tile-num" x="434" y="111" text-anchor="middle">12</text></g>
-            <g class="stream-tile" style="--k:3"><rect x="476" y="78" width="52" height="52" rx="11" fill="var(--c-teal)" /><text class="tile-num" x="502" y="111" text-anchor="middle">13</text></g>
+            <!-- the stream: single samples arriving one at a time (batch size 1) -->
+            <text class="sub" x="486" y="56" text-anchor="middle">one sample at a time (batch size 1)</text>
+
+            <!-- each class is a shingled run of single samples: many examples of one class stream past, each seen once, then the class is gone -->
+            <g class="stream-tile" style="--k:0">
+              <rect x="260" y="72" width="32" height="52" rx="9" fill="var(--c-mint)" fill-opacity="0.34" />
+              <rect x="271" y="75" width="32" height="52" rx="9" fill="var(--c-mint)" fill-opacity="0.64" />
+              <rect x="282" y="78" width="32" height="52" rx="9" fill="var(--c-mint)" />
+              <text class="tile-num" x="298" y="111" text-anchor="middle">10</text>
+            </g>
+            <g class="stream-tile" style="--k:1">
+              <rect x="328" y="72" width="32" height="52" rx="9" fill="var(--c-orange)" fill-opacity="0.34" />
+              <rect x="339" y="75" width="32" height="52" rx="9" fill="var(--c-orange)" fill-opacity="0.64" />
+              <rect x="350" y="78" width="32" height="52" rx="9" fill="var(--c-orange)" />
+              <text class="tile-num" x="366" y="111" text-anchor="middle">11</text>
+            </g>
+            <g class="stream-tile" style="--k:2">
+              <rect x="396" y="72" width="32" height="52" rx="9" fill="var(--c-purple)" fill-opacity="0.34" />
+              <rect x="407" y="75" width="32" height="52" rx="9" fill="var(--c-purple)" fill-opacity="0.64" />
+              <rect x="418" y="78" width="32" height="52" rx="9" fill="var(--c-purple)" />
+              <text class="tile-num" x="434" y="111" text-anchor="middle">12</text>
+            </g>
+            <g class="stream-tile" style="--k:3">
+              <rect x="464" y="72" width="32" height="52" rx="9" fill="var(--c-teal)" fill-opacity="0.34" />
+              <rect x="475" y="75" width="32" height="52" rx="9" fill="var(--c-teal)" fill-opacity="0.64" />
+              <rect x="486" y="78" width="32" height="52" rx="9" fill="var(--c-teal)" />
+              <text class="tile-num" x="502" y="111" text-anchor="middle">13</text>
+            </g>
             <text class="ell" x="556" y="112" text-anchor="middle">…</text>
-            <g class="stream-tile" style="--k:4"><rect x="596" y="78" width="52" height="52" rx="11" fill="var(--c-blue)" /><text class="tile-num" x="622" y="111" text-anchor="middle">48</text></g>
-            <text class="sub" x="486" y="150" text-anchor="middle">each seen once; then we test what is still known</text>
+            <g class="stream-tile" style="--k:4">
+              <rect x="584" y="72" width="32" height="52" rx="9" fill="var(--c-blue)" fill-opacity="0.34" />
+              <rect x="595" y="75" width="32" height="52" rx="9" fill="var(--c-blue)" fill-opacity="0.64" />
+              <rect x="606" y="78" width="32" height="52" rx="9" fill="var(--c-blue)" />
+              <text class="tile-num" x="622" y="111" text-anchor="middle">48</text>
+            </g>
+            <text class="sub" x="486" y="150" text-anchor="middle">each class floods in, then is gone; every sample seen once</text>
 
             <!-- time axis -->
             <line class="edge" x1="30" y1="220" x2="694" y2="220" marker-end="url(#ah2)" style="--len:680" />
