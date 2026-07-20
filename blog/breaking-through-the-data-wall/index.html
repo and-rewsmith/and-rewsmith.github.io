@@ -256,45 +256,60 @@
           Our system is the first Complementary Learning System we have built on top of EGTO, our
           energy-based architecture. It has three parts, and they line up with the blueprint above:
           a base network learned during pretraining, an associative memory that takes on the novel
-          classes, and a router that decides, per input, which one to trust.
+          classes, and a novelty signal that decides, per input, when to recruit that memory into the base.
         </p>
         <figure class="diagram reveal noclip">
-          <svg viewBox="0 0 720 250" role="img" aria-label="System diagram: an input goes to a novelty router, which sends familiar inputs to a frozen base network and novel inputs to an associative memory; both feed the prediction.">
+          <svg viewBox="0 0 720 250" role="img" aria-label="System diagram: an input drives a frozen, dynamical base network, which reads out the prediction. An associative-memory layer sits above the base; under a novelty signal computed from the base's own energy, the memory's neurons are recruited down into the base, so base and memory act as one system.">
             <defs>
               <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
                 <path class="arrowfill" d="M0,0 L9,4.5 L0,9 z" />
               </marker>
+              <marker id="arT" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 z" fill="var(--c-teal)" />
+              </marker>
             </defs>
-            <rect class="node" x="10" y="101" width="96" height="48" rx="10" />
-            <text class="lab" x="58" y="130" text-anchor="middle">input</text>
 
-            <polygon class="node accent" points="200,84 254,125 200,166 146,125" />
-            <text class="lab" x="200" y="121" text-anchor="middle">novelty</text>
-            <text class="sub" x="200" y="138" text-anchor="middle">router</text>
+            <!-- input -->
+            <rect class="node" x="8" y="112" width="90" height="44" rx="10" />
+            <text class="lab" x="53" y="139" text-anchor="middle">input</text>
 
-            <rect class="node" x="336" y="38" width="214" height="64" rx="12" />
-            <text class="lab" x="443" y="64" text-anchor="middle">Frozen base network</text>
-            <text class="sub" x="443" y="83" text-anchor="middle">base classes · never updated</text>
+            <!-- associative memory: a layer sitting on top of the base, recruited under novelty -->
+            <rect class="node accent" x="250" y="26" width="258" height="60" rx="13" />
+            <text class="lab" x="379" y="50" text-anchor="middle">Associative memory</text>
+            <text class="sub" x="379" y="69" text-anchor="middle">recruited under novelty</text>
+            <circle cx="330" cy="80" r="3.5" fill="var(--c-teal)" /><circle cx="360" cy="80" r="3.5" fill="var(--c-teal)" /><circle cx="398" cy="80" r="3.5" fill="var(--c-teal)" /><circle cx="428" cy="80" r="3.5" fill="var(--c-teal)" />
 
-            <rect class="node accent" x="336" y="148" width="214" height="64" rx="12" />
-            <text class="lab" x="443" y="174" text-anchor="middle">Associative memory</text>
-            <text class="sub" x="443" y="193" text-anchor="middle">novel classes · sparse writes</text>
+            <!-- recruitment: memory neurons converge into the novelty gate, then fan down into the base's neurons -->
+            <g fill="none" stroke="var(--c-teal)" stroke-width="1.6" stroke-dasharray="3 3">
+              <path d="M330,80 L379,97" /><path d="M360,80 L379,97" /><path d="M398,80 L379,97" /><path d="M428,80 L379,97" />
+              <path d="M379,129 L305,139" marker-end="url(#arT)" /><path d="M379,129 L345,139" marker-end="url(#arT)" /><path d="M379,129 L413,139" marker-end="url(#arT)" /><path d="M379,129 L452,139" marker-end="url(#arT)" />
+            </g>
 
-            <rect class="node" x="614" y="101" width="98" height="48" rx="10" />
-            <text class="lab" x="663" y="130" text-anchor="middle">prediction</text>
+            <!-- novelty gate, opened by the base's own energy -->
+            <polygon class="node accent" points="379,93 409,112 379,131 349,112" />
+            <text class="lab" x="379" y="116" text-anchor="middle" font-size="10.5">novelty</text>
+            <text class="edgelab" x="416" y="109" text-anchor="start">gate on the base's</text>
+            <text class="edgelab" x="416" y="123" text-anchor="start">own energy signal</text>
 
-            <path class="edge" d="M106,125 L144,125" marker-end="url(#ah)" style="--len:60" />
-            <path class="edge" d="M233,107 C288,80 300,70 334,70" marker-end="url(#ah)" style="--len:150" />
-            <path class="edge" d="M233,143 C288,170 300,180 334,180" marker-end="url(#ah)" style="--len:150" />
-            <path class="edge" d="M550,70 C588,70 600,102 612,118" marker-end="url(#ah)" style="--len:150" />
-            <path class="edge" d="M550,180 C588,180 600,148 612,132" marker-end="url(#ah)" style="--len:150" />
-            <text class="edgelab" x="298" y="86" text-anchor="middle">familiar</text>
-            <text class="edgelab" x="298" y="170" text-anchor="middle">novel</text>
+            <!-- base network: the frozen, dynamical substrate that reads out the prediction -->
+            <rect class="node" x="250" y="140" width="258" height="72" rx="13" />
+            <circle cx="305" cy="140" r="4" fill="var(--accent)" /><circle cx="345" cy="140" r="4" fill="var(--accent)" /><circle cx="413" cy="140" r="4" fill="var(--accent)" /><circle cx="452" cy="140" r="4" fill="var(--accent)" />
+            <path d="M278,182 a11,11 0 1 0 5,-9" fill="none" stroke="rgba(var(--ink-rgb),0.5)" stroke-width="1.6" marker-end="url(#ah)" />
+            <text class="lab" x="386" y="176" text-anchor="middle">Base network</text>
+            <text class="sub" x="386" y="196" text-anchor="middle">frozen · recurrent, dynamical</text>
+
+            <!-- prediction -->
+            <rect class="node" x="620" y="112" width="92" height="44" rx="10" />
+            <text class="lab" x="666" y="139" text-anchor="middle">prediction</text>
+
+            <!-- spine: input -> base -> prediction -->
+            <path class="edge" d="M98,134 C170,134 190,172 250,174" marker-end="url(#ah)" style="--len:200" />
+            <path class="edge" d="M508,174 C568,172 585,134 620,134" marker-end="url(#ah)" style="--len:150" />
           </svg>
-          <figcaption>The two systems stay separate, divided by a novelty signal. The base is frozen; only the memory grows.</figcaption>
+          <figcaption>The memory is not a separate network sitting on a parallel output. Under a novelty signal computed from the base's own energy, its neurons are recruited into the frozen, dynamical base, so the two act as one system that reads out a single prediction. Only the memory grows; the base never changes.</figcaption>
         </figure>
         <p>
-          Keeping the systems separate is what makes this work, and it is where EGTO pays off. An
+          Keeping the base frozen while the memory takes on the new learning is what makes this work, and it is where EGTO pays off. An
           energy-based model reports, on its own, how well an input fits what it already knows, so
           the question "is this new?" is a measurement the architecture already makes.
         </p>
@@ -365,8 +380,8 @@
           <figcaption>Routing quality on the training set (left) and held-out validation set (right): the base network on its classes, the memory on the novel ones, and the full routed system on all 49. The dashed line is a perfect router; ours recovers about 97% of it on validation.</figcaption>
         </figure>
         <div class="pillar"><div class="tag">Pillar 3 · done</div><div class="body">
-          <strong>The secondary network is engaged only when needed</strong>, using EGTO's novelty
-          signal to route each input between the frozen base and the memory.
+          <strong>The secondary network is engaged only when needed</strong>: EGTO's novelty
+          signal, read from the base's own energy, recruits the memory into the base only when an input is novel.
         </div></div>
 
         <h3>Sample efficiency</h3>
