@@ -261,11 +261,14 @@
         <figure class="diagram reveal noclip">
           <svg viewBox="0 0 720 250" role="img" aria-label="System diagram: an input drives a frozen, dynamical base network, which reads out the prediction. An associative-memory layer sits above the base; under a novelty signal computed from the base's own energy, the memory's neurons are recruited down into the base, so base and memory act as one system.">
             <defs>
-              <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
-                <path class="arrowfill" d="M0,0 L9,4.5 L0,9 z" />
+              <marker id="ah" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+                <path class="arrowfill" d="M2,2 L10,6 L2,10 Z" />
               </marker>
-              <marker id="arT" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-                <path d="M0,0 L8,4 L0,8 z" fill="var(--c-teal)" />
+              <marker id="ahr" markerWidth="9" markerHeight="9" refX="6.4" refY="4.5" orient="auto" markerUnits="userSpaceOnUse">
+                <path class="arrowfill" d="M1.6,1.6 L7.6,4.5 L1.6,7.4 Z" />
+              </marker>
+              <marker id="arT" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto" markerUnits="userSpaceOnUse">
+                <path d="M1.5,1.6 L7.5,4.5 L1.5,7.4 Z" fill="var(--c-teal)" />
               </marker>
             </defs>
 
@@ -294,7 +297,7 @@
             <!-- base network: the frozen, dynamical substrate that reads out the prediction -->
             <rect class="node" x="250" y="140" width="258" height="72" rx="13" />
             <circle cx="305" cy="140" r="4" fill="var(--accent)" /><circle cx="345" cy="140" r="4" fill="var(--accent)" /><circle cx="413" cy="140" r="4" fill="var(--accent)" /><circle cx="452" cy="140" r="4" fill="var(--accent)" />
-            <path d="M278,182 a11,11 0 1 0 5,-9" fill="none" stroke="rgba(var(--ink-rgb),0.5)" stroke-width="1.6" marker-end="url(#ah)" />
+            <path d="M293,170 a11,11 0 1 1 -0.5,-0.9" fill="none" stroke="rgba(var(--ink-rgb),0.5)" stroke-width="1.7" marker-end="url(#ahr)" />
             <text class="lab" x="386" y="176" text-anchor="middle">Base network</text>
             <text class="sub" x="386" y="196" text-anchor="middle">frozen · recurrent, dynamical</text>
 
@@ -303,8 +306,8 @@
             <text class="lab" x="666" y="139" text-anchor="middle">prediction</text>
 
             <!-- spine: input -> base -> prediction -->
-            <path class="edge" d="M98,134 C170,134 190,172 250,174" marker-end="url(#ah)" style="--len:200" />
-            <path class="edge" d="M508,174 C568,172 585,134 620,134" marker-end="url(#ah)" style="--len:150" />
+            <path class="edge" d="M98,134 C165,134 180,176 250,176" marker-end="url(#ah)" style="--len:200" />
+            <path class="edge" d="M508,176 C568,174 585,134 620,134" marker-end="url(#ah)" style="--len:150" />
           </svg>
           <figcaption>The memory is not a separate network sitting on a parallel output. Under a novelty signal computed from the base's own energy, its neurons are recruited into the frozen, dynamical base, so the two act as one system that reads out a single prediction. Only the memory grows; the base never changes.</figcaption>
         </figure>
@@ -397,7 +400,7 @@
         </figure>
         <div class="pillar"><div class="tag">Pillar 4 · done</div><div class="body">
           <strong>Sample-efficient online learning at deployment</strong>, because the associative
-          memory estimates a new class from a handful of examples rather than many gradient steps.
+          memory estimates a new class from just a handful of examples.
         </div></div>
       </section>
 
